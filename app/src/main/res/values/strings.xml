@@ -2,11 +2,11 @@
     <string name="app_name">APOD Viewer</string>
     <string name="preview_play_description">This is a video item</string>
     <string name="preview_img">Preview of the NASA picture of a day image</string>
-    <string name="gallery_title">NASA\'s pictures of the day</string>
+    <string name="gallery_title">NASA Pictures of the day</string>
     <string name="gallery_fragment">Gallery</string>
     <string name="details_fragment">Details</string>
 
-    <string name="no_internet">No connection to NASA\'s servers</string>
+    <string name="no_internet">No connection to NASA servers</string>
 
     <!--    Details     -->
     <string name="details_copyright">Copyright: %s</string>
