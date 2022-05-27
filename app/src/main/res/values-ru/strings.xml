@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">APOD Viewer</string>
+    <string name="preview_play_description">Это видео-элемент</string>
+    <string name="preview_img">Превью изображения дня NASA</string>
+    <string name="gallery_title">Изображения дня от NASA</string>
+    <string name="gallery_fragment">Галерея</string>
+    <string name="details_fragment">Детали</string>
+    <string name="details_copyright">Копирайт: %s</string>
+    <string name="details_date">Дата: %s</string>
+    <string name="share">Поделиться изображением</string>
+    <string name="no_internet">Нет соединения с серверами NASA</string>
+</resources>

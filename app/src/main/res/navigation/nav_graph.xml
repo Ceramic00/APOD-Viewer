@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/galleryFragment">
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.example.apodviewer.gallery.GalleryFragment"
+        android:label="@string/gallery_fragment"
+        tools:layout="@layout/fragment_gallery">
+        <action
+            android:id="@+id/action_fragment_gallery_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@anim/move_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/move_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.apodviewer.details.DetailsFragment"
+        android:label="@string/details_fragment"
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="item"
+            app:argType="com.example.apodviewer.database.PodItem" />
+    </fragment>
+</navigation>
