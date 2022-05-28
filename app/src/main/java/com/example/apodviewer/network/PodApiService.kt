@@ -68,6 +68,17 @@ object PodApi {
         pods.sortByDescending { it.dateMillis }
         return pods
     }
+
+    suspend fun isTodayAvailable(): Boolean {
+        val today = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+            .format(Date(System.currentTimeMillis()))
+        return try{
+            retrofitService.queryPods(today, today)
+            true
+        }catch (e: Exception) {
+            false
+        }
+    }
 }
 
 @Parcelize

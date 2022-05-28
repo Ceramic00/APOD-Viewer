@@ -55,7 +55,7 @@ class GalleryViewModel(
             nextPodItemDate = cal.time
 
             val currentItems = _podItems.value ?: ArrayList()
-            val cache = queryPodItems(fromDate, toDate)
+            val cache = getValidCache(fromDate, toDate)
             if (cache.isNullOrEmpty()) {
                 try {
                     val dateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -93,9 +93,17 @@ class GalleryViewModel(
         }
     }
 
-    private suspend fun queryPodItems(fromDate: Date, toDate: Date): List<PodItem>? {
+    private suspend fun getValidCache(fromDate: Date, toDate: Date): List<PodItem>? {
         return withContext(Dispatchers.IO) {
-           database.getItemsBetween(fromDate.time, toDate.time)
+            val today = Date(System.currentTimeMillis())
+            val cache = database.getItemsBetween(fromDate.time, toDate.time)
+
+            if (cache.isNullOrEmpty()
+                || (toDate == today && PodApi.isTodayAvailable() && cache[0].date != today))
+                // Updating cache if new NASA image already in stock
+                null
+            else
+                cache
         }
     }
 
