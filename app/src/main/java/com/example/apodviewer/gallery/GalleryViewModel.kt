@@ -2,6 +2,7 @@ package com.example.apodviewer.gallery
 
 import androidx.lifecycle.AndroidViewModel
 import android.app.Application
+import android.text.format.DateUtils.isToday
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -95,11 +96,10 @@ class GalleryViewModel(
 
     private suspend fun getValidCache(fromDate: Date, toDate: Date): List<PodItem>? {
         return withContext(Dispatchers.IO) {
-            val today = Date(System.currentTimeMillis())
             val cache = database.getItemsBetween(fromDate.time, toDate.time)
 
             if (cache.isNullOrEmpty()
-                || (toDate == today && PodApi.isTodayAvailable() && cache[0].date != today))
+                || (isToday(toDate.time) && PodApi.isTodayAvailable() && !isToday(cache[0].dateMillis)))
                 // Updating cache if new NASA image already in stock
                 null
             else
