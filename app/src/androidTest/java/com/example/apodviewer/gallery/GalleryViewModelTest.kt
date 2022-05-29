@@ -13,7 +13,6 @@ import com.example.apodviewer.R
 import com.example.apodviewer.database.PodItem
 import com.example.apodviewer.network.PodApi
 import kotlinx.coroutines.runBlocking
-import org.hamcrest.Matchers.not
 import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test

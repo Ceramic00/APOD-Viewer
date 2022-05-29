@@ -99,7 +99,7 @@ class GalleryViewModel(
             val cache = database.getItemsBetween(fromDate.time, toDate.time)
 
             if (cache.isNullOrEmpty()
-                || (isToday(toDate.time) && PodApi.isTodayAvailable() && !isToday(cache[0].dateMillis)))
+                || (isToday(toDate.time) && !isToday(cache[0].dateMillis) && PodApi.isTodayAvailable()))
                 // Updating cache if new NASA image already in stock
                 null
             else
