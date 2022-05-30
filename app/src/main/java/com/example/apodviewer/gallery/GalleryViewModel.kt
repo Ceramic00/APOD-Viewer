@@ -35,7 +35,7 @@ class GalleryViewModel(
 
     val showNetworkError = MutableLiveData<Boolean>()
 
-    private var nextPodItemDate: Date? = null
+    private var nextPodItemDate = getValidStartDate()
 
     init {
         getNextPodItems()
@@ -46,12 +46,14 @@ class GalleryViewModel(
             val previousStatus = _status.value
             _status.value = PodApiStatus.LOADING
 
-            // Creating dates from first date of month to last/today
+            // Creating dates from the first date of the month to the last/today
             val cal = Calendar.getInstance()
-            val toDate = nextPodItemDate ?: Date(System.currentTimeMillis())
-            cal.time = toDate
+            cal.time = nextPodItemDate
+
+            val toDate = cal.time
             cal.set(Calendar.DAY_OF_MONTH, 1)
             val fromDate = cal.time
+
             cal.add(Calendar.DATE, -1)
             nextPodItemDate = cal.time
 
@@ -105,6 +107,23 @@ class GalleryViewModel(
             else
                 cache
         }
+    }
+
+    private fun getValidStartDate(): Date {
+        val cal = Calendar.getInstance()
+        with(cal) {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        // If no pictures for this month yet -> get previous month pictures
+        runBlocking {
+            if (cal.get(Calendar.DAY_OF_MONTH) == 1 && !PodApi.isTodayAvailable())
+                cal.add(Calendar.DATE, -1)
+        }
+        return cal.time
     }
 
     private suspend fun insertPodItemsToDatabase(items: List<PodItem>) {

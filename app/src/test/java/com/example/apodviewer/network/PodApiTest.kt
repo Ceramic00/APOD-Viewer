@@ -10,9 +10,10 @@ class PodApiTest {
 
     @Test
     fun `Get pods by date descending, correct order`() = runBlocking {
-        val cal = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-        cal.set(Calendar.DATE, 1)
+        val cal = Calendar.getInstance()
+        cal.add(Calendar.DATE, -5)
+
         val result = PodApi.getPods(dateFormat.format(cal.time))
         assert(result[0].dateMillis > result[1].dateMillis)
     }

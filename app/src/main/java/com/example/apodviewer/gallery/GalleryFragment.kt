@@ -37,9 +37,10 @@ class GalleryFragment: Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        binding.galleryList.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
+        val adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
             viewModel.displayDetails(it)
         })
+        binding.galleryList.adapter = adapter
 
         binding.galleryList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -55,6 +56,12 @@ class GalleryFragment: Fragment() {
                 }
             }
         })
+
+        adapter.lastBound.observe(viewLifecycleOwner) {
+            if (it == true
+                && (!binding.galleryList.canScrollVertically(1) || !binding.galleryList.canScrollVertically(-1)))
+                    viewModel.getNextPodItems()
+        }
 
         viewModel.navigateToDetails.observe(viewLifecycleOwner) {
             it?.let {

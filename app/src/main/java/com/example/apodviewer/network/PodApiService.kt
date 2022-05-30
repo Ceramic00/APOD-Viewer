@@ -71,7 +71,7 @@ object PodApi {
 
     suspend fun isTodayAvailable(): Boolean {
         val today = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-            .format(Date(System.currentTimeMillis()))
+            .format(Date())
         return try{
             retrofitService.queryPods(today, today)
             true
